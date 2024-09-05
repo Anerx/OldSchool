@@ -16,6 +16,9 @@
 
     static string ExecuteCalculation(string expression)
     {
+        //Jag skapade en char array som jag kan använda för att hitta start och stopp index
+        char[] operators = {'-','/','+','*'};
+
         string finalExpression = "";
         //Först vill jag leta igenom strängen och hitta paranteserna och extrahera det som de håller och göra beräkningen och sedan ta bort paranteserna med innehållet och ersätta med svaret.
         //Jag tänker att använda mig av while loop som ska söka igenom strängen tills inga paranteser är kvar.
@@ -35,7 +38,34 @@
 
             finalExpression = expression;
         }
+        // Nu när det funkar att räkna ut det som ligger inom parenteserna ska jag börja ta hand om multiplikationsoperatorer
+        // Tänker att det är lättast att använda sig av en while loop här också.
+        while (expression.Contains("/") || expression.Contains("*"))
+        {
+            // Här letar jag efter indexet av den första multiplikationsoperatorn som kommer
+            int indexOfTheSymbol = expression.IndexOfAny(new char[] {'/', '*'});
 
+            // Dessa två letar efter början och slutet av ekvationen jag behöver extrahera
+            int leftStart = indexOfTheSymbol - 1;
+            while(leftStart >= 0 && !operators.Contains(expression[leftStart])){
+                leftStart--;
+            }
+            leftStart++;
+
+            int rightEnd = indexOfTheSymbol + 1;
+            while(rightEnd < expression.Length && !operators.Contains(expression[rightEnd])){
+                rightEnd++;
+            }
+
+            // Här plockar jag ut den ekvationen jag behöver, och precis som i ovanstående loop gör jag beräkningen och ersätter ekvationen med svaret
+            string filteredExpression = expression.Substring(leftStart, rightEnd - leftStart);
+
+            double result = ExpressionConverter(filteredExpression);
+
+            expression = expression.Substring(0, leftStart) + result.ToString() + expression.Substring(rightEnd);
+
+            finalExpression = expression;
+        }
 
         return finalExpression;
     }
@@ -54,7 +84,7 @@
             {
                 number += item;
             }
-            //Om den stöter på operator då lägger den först in nummer den har hittat i listan och sedan operator, efter det så nollställer den number och fortsätter leta.
+            //Om den stöter på operator då lägger den först in nummer den har hittat i listan och sedan operator, efter det så nollställer den numbersträngen och fortsätter leta.
             else if(!char.IsDigit(item))
             {
                 expressionParts.Add(number);
