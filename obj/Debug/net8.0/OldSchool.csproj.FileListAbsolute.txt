@@ -1,0 +1,15 @@
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\bin\Debug\net8.0\OldSchool.exe
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\bin\Debug\net8.0\OldSchool.deps.json
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\bin\Debug\net8.0\OldSchool.runtimeconfig.json
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\bin\Debug\net8.0\OldSchool.dll
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\bin\Debug\net8.0\OldSchool.pdb
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.AssemblyInfoInputs.cache
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.AssemblyInfo.cs
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.csproj.CoreCompileInputs.cache
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.sourcelink.json
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.dll
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\refint\OldSchool.dll
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.pdb
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\OldSchool.genruntimeconfig.cache
+C:\Users\Alexa\Desktop\OldSchool\OldSchool\obj\Debug\net8.0\ref\OldSchool.dll
