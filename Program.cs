@@ -3,21 +3,58 @@
     private static void Main(string[] args)
     {
         //Skapar en sträng för att testa.
-        string expression = "1 + (36/2) / (3 * 3) -2 + 12 - (20 / 5)";
+        // string expression = "1 + (36/2) / (3 * 3) -2 + 12 - (20 / 5)";
+        string filteredExpression = "";
+        bool isNotValid = true;
 
-        //Jag vill filtrera bort alla mellanslag för att när användaren skickar in är det inte säkert att mellanslag kommer med eller om användaren råkar ha med eller slarva med det.
-        string filteredExpression = expression.Replace(" ", "");
+        while (isNotValid)
+        {
+            Console.WriteLine("Hello, enter the equation you want to calculate");
 
-        //Detta kommer vara main funktion som tar hand om det hela.
-        var result = ExecuteCalculation(filteredExpression);
+            string expression = Console.ReadLine();
 
-        Console.WriteLine("Resultat: " + result);
+            if (string.IsNullOrEmpty(expression))
+            {
+                Console.WriteLine("Try again");
+            }
+
+            //Jag vill filtrera bort alla mellanslag för att när användaren skickar in är det inte säkert att mellanslag kommer med eller om användaren råkar ha med eller slarva med det.
+            filteredExpression = expression.Replace(" ", "");
+
+            string allowerChars = "0123456789+-/*() ";
+
+            isNotValid = false;
+
+            foreach (var item in filteredExpression)
+            {
+                if (!allowerChars.Contains(item))
+                {
+                    isNotValid = true;
+                    continue;
+                }
+            }
+
+            if (!isNotValid)
+            {
+                Console.WriteLine("All good :)");
+            }
+            else
+            {
+                Console.WriteLine("Try again, equation can only contain numbers and equation symbols");
+                continue;
+            }
+
+            //Detta kommer vara main funktion som tar hand om det hela.
+            var result = ExecuteCalculation(filteredExpression);
+
+            Console.WriteLine("Result: " + result);
+        }
     }
 
     static string ExecuteCalculation(string expression)
     {
         //Jag skapade en char array som jag kan använda för att hitta start och stopp index
-        char[] operators = {'-','/','+','*'};
+        char[] operators = { '-', '/', '+', '*' };
 
         string finalExpression = "";
         //Först vill jag leta igenom strängen och hitta paranteserna och extrahera det som de håller och göra beräkningen och sedan ta bort paranteserna med innehållet och ersätta med svaret.
@@ -43,21 +80,51 @@
         while (expression.Contains("/") || expression.Contains("*"))
         {
             // Här letar jag efter indexet av den första multiplikationsoperatorn som kommer
-            int indexOfTheSymbol = expression.IndexOfAny(new char[] {'/', '*'});
+            int indexOfTheSymbol = expression.IndexOfAny(new char[] { '/', '*' });
 
             // Dessa två letar efter början och slutet av ekvationen jag behöver extrahera
             int leftStart = indexOfTheSymbol - 1;
-            while(leftStart >= 0 && !operators.Contains(expression[leftStart])){
+            while (leftStart >= 0 && !operators.Contains(expression[leftStart]))
+            {
                 leftStart--;
             }
             leftStart++;
 
             int rightEnd = indexOfTheSymbol + 1;
-            while(rightEnd < expression.Length && !operators.Contains(expression[rightEnd])){
+            while (rightEnd < expression.Length && !operators.Contains(expression[rightEnd]))
+            {
                 rightEnd++;
             }
 
             // Här plockar jag ut den ekvationen jag behöver, och precis som i ovanstående loop gör jag beräkningen och ersätter ekvationen med svaret
+            string filteredExpression = expression.Substring(leftStart, rightEnd - leftStart);
+
+            double result = ExpressionConverter(filteredExpression);
+
+            expression = expression.Substring(0, leftStart) + result.ToString() + expression.Substring(rightEnd);
+
+            finalExpression = expression;
+        }
+        //Nästa kommer vara copy/paste för att göra samma med substaktionsoperatorer
+        while (expression.Contains("-") || expression.Contains("+"))
+        {
+            // Här letar jag efter indexet av den första multiplikationsoperatorn som kommer
+            int indexOfTheSymbol = expression.IndexOfAny(new char[] { '-', '+' });
+
+            // Dessa två letar efter början och slutet av ekvationen jag behöver extrahera
+            int leftStart = indexOfTheSymbol - 1;
+            while (leftStart >= 0 && !operators.Contains(expression[leftStart]))
+            {
+                leftStart--;
+            }
+            leftStart++;
+
+            int rightEnd = indexOfTheSymbol + 1;
+            while (rightEnd < expression.Length && !operators.Contains(expression[rightEnd]))
+            {
+                rightEnd++;
+            }
+
             string filteredExpression = expression.Substring(leftStart, rightEnd - leftStart);
 
             double result = ExpressionConverter(filteredExpression);
@@ -85,7 +152,7 @@
                 number += item;
             }
             //Om den stöter på operator då lägger den först in nummer den har hittat i listan och sedan operator, efter det så nollställer den numbersträngen och fortsätter leta.
-            else if(!char.IsDigit(item))
+            else if (!char.IsDigit(item))
             {
                 expressionParts.Add(number);
                 expressionParts.Add(item.ToString());
@@ -93,7 +160,7 @@
             }
         }
         //Måste ha denna för att lägga in sista siffran i listan.
-        if(!string.IsNullOrEmpty(number))
+        if (!string.IsNullOrEmpty(number))
         {
             expressionParts.Add(number);
         }
